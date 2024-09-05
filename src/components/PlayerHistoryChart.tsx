@@ -19,6 +19,7 @@ interface Game {
   created_at: string;
   score: number;
   player_id: number;
+  mode: string; // Adicione a propriedade 'mode'
 }
 
 interface Player {
@@ -30,6 +31,7 @@ const PlayerHistoryChart: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
   const [selectedPlayer, setSelectedPlayer] = useState<number | ''>('');
+  const [selectedMode, setSelectedMode] = useState<string>(''); // Novo estado para o modo de jogo
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -68,8 +70,9 @@ const PlayerHistoryChart: React.FC = () => {
     });
   };
 
-  // Filtra os jogos do jogador selecionado
-  const playerGames = getRecentGames(games).filter(game => game.player_id === selectedPlayer);
+  // Filtra os jogos do jogador selecionado e do modo de jogo selecionado
+  const playerGames = getRecentGames(games)
+    .filter(game => game.player_id === selectedPlayer && (selectedMode === '' || game.mode === selectedMode));
 
   // Ordena os jogos pela data
   playerGames.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
@@ -129,6 +132,10 @@ const PlayerHistoryChart: React.FC = () => {
     setSelectedPlayer(Number(event.target.value)); // Garanta que o valor é convertido para número
   };
 
+  const handleModeChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelectedMode(event.target.value as string); // Atualiza o estado do modo de jogo
+  };
+
   return (
     <div>
       <select onChange={handlePlayerChange} value={selectedPlayer}>
@@ -137,6 +144,14 @@ const PlayerHistoryChart: React.FC = () => {
           <option key={player.id} value={player.id}>{player.name}</option>
         ))}
       </select>
+      
+      <select onChange={handleModeChange} value={selectedMode}>
+        <option value="">Todos os Modos</option>
+        <option value="Normal">Normal</option>
+        <option value="Aleatório">Aleatório</option>
+        <option value="Hard">Hard</option>
+      </select>
+      
       {selectedPlayer && (
         <div style={{ height: '400px', width: '100%' }}>
           <Line data={chartData} options={chartOptions} />
