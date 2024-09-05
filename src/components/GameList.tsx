@@ -42,6 +42,7 @@ const GameList: React.FC = () => {
             <TableCell>Data e hora do jogo</TableCell>
             <TableCell>Pontuação</TableCell>
             <TableCell>Jogador</TableCell>
+            <TableCell>Modo</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -53,6 +54,7 @@ const GameList: React.FC = () => {
                 {`${new Date(games.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })} ${new Date(games.created_at).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`}
                 <TableCell>{games.score}</TableCell>
                 <TableCell>{playerName}</TableCell>
+                <TableCell>{games.mode}</TableCell>
               </TableRow>
             );
           })}
