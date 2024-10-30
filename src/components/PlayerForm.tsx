@@ -1,46 +1,58 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { TextField, Button, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { TextField, Button, FormControl, FormHelperText, CircularProgress } from '@mui/material';
 
 const PlayerForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setError(null); // Limpar erro anterior
+    setSuccess(null); // Limpar mensagem de sucesso anterior
 
-    if (!name) {
+    if (!name.trim()) {
       setError('O nome é obrigatório.');
       return;
     }
 
-    const { data, error } = await supabase.from('players').insert([{ name }]);
+    setLoading(true); // Iniciar o carregamento
+
+    const { data, error } = await supabase.from('players').insert([{ name: name.trim() }]);
+
+    setLoading(false); // Parar o carregamento
 
     if (error) {
-      setError('Erro.');
+      setError('Erro ao cadastrar jogador.');
     } else {
-      setSuccess('Jogador cadastrado no jogo com sucesso!');
-      setName('');
+      setSuccess('Jogador cadastrado com sucesso!');
+      setName(''); // Limpar o campo de entrada após o sucesso
     }
   };
 
   return (
-    <FormControl fullWidth>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Nome do Jogador"
-          variant="outlined"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          fullWidth
-        />
-        {error && <FormHelperText error>{error}</FormHelperText>}
-        {success && <FormHelperText>{success}</FormHelperText>}
-        <Button type="submit" variant="contained" color="secondary" sx={{ marginTop: 2 }}>
-          Cadastrar Jogador
+    <FormControl fullWidth component="form" onSubmit={handleSubmit}>
+      <TextField
+        label="Nome"
+        variant="outlined"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        fullWidth
+        margin="dense"
+        error={!!error}
+        InputLabelProps={{
+          style: { lineHeight: '1.5' },
+        }}
+      />
+      {error && <FormHelperText error>{error}</FormHelperText>}
+      {success && <FormHelperText sx={{ color: 'green' }}>{success}</FormHelperText>}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
+        <Button type="submit" variant="contained" color="secondary" disabled={loading}>
+          {loading ? <CircularProgress size={24} color="inherit" /> : 'Cadastrar'}
         </Button>
-      </form>
+      </div>
     </FormControl>
   );
 };

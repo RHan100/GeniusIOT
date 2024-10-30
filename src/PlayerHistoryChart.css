@@ -1,0 +1,86 @@
+.player-history-chart {
+  padding: 20px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  /* Define uma largura máxima para o contêiner */
+  margin: auto;
+  /* Centraliza o contêiner na página */
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  /* Tamanho de fonte consistente */
+  margin-top: 8px;
+  /* Espaçamento acima da mensagem */
+}
+
+.total-score {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.chart-container {
+  margin-top: 20px;
+}
+
+.select-container,
+.date-filter {
+  display: flex;
+  flex-wrap: wrap;
+  /* Permite que os itens se movam para a linha seguinte em telas menores */
+  gap: 16px;
+  /* Espaço entre os campos */
+  margin-bottom: 20px;
+  width: 100%;
+  /* Ajuste a largura total para melhor responsividade */
+}
+
+.select-field,
+.date-field {
+  flex: 1;
+  /* Permite que os campos ocupem o mesmo espaço */
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  /* Largura mínima para manter legibilidade em telas pequenas */
+}
+
+.select-field label,
+.date-field label {
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: #333;
+}
+
+select,
+input[type="date"] {
+  padding: 10px;
+  /* Tamanho de padding uniformizado */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  /* Tamanho de fonte ajustado para consistência */
+  width: 100%;
+  box-sizing: border-box;
+  /* Garante que padding e border sejam incluídos na largura total */
+}
+
+input[type="date"]:focus,
+select:focus {
+  outline: none;
+  /* Remove o contorno padrão */
+  border-color: #007bff;
+  /* Cor do contorno ao focar */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  /* Sombra ao focar */
+}
+
+.no-data {
+  text-align: center;
+  /* Centraliza a mensagem "sem dados" */
+  margin: 20px 0;
+  /* Espaçamento acima e abaixo */
+}

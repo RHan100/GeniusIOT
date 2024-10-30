@@ -50,36 +50,38 @@ const PlayerSelect: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-  <FormControl fullWidth variant="outlined" style={{ marginTop: '16px' }}>
-    <InputLabel id="player-select-label">Selecione um Jogador</InputLabel>
-    <Select
-      label="Selecione um Jogador"
-      value={selectedPlayer}
-      onChange={(e) => setSelectedPlayer(e.target.value as number)}
-    >
-      {players.map((player) => (
-        <MenuItem key={player.id} value={player.id}>{player.name}</MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-  
-  <FormControl fullWidth>
-    <InputLabel id="game-select-label">Selecione Um Jogo</InputLabel>
-    <Select
-      label="blablabla bl blablab"
-      value={selectedGame}
-      onChange={(e) => setSelectedGame(e.target.value as number)}
-    >
-      {games.map((game) => (
-        <MenuItem key={game.id} value={game.id}>{`Jogo ${game.id}`}</MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-  
-  {error && <FormHelperText error>{error}</FormHelperText>}
-  {success && <FormHelperText>{success}</FormHelperText>}
-  <Button onClick={handleRegister} variant="contained" color="secondary">Registrar Jogador no Jogo</Button>
-</div>
+      <FormControl fullWidth variant="outlined" style={{ marginTop: '16px' }}>
+        <InputLabel id="player-select-label">Selecione um Jogador</InputLabel>
+        <Select
+          label="Selecione um Jogador"
+          value={selectedPlayer}
+          onChange={(e) => setSelectedPlayer(e.target.value as number)}
+        >
+          {players.map((player) => (
+            <MenuItem key={player.id} value={player.id}>{player.name}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl fullWidth>
+        <InputLabel id="game-select-label">Selecione um Jogo</InputLabel>
+        <Select
+          label="blablabla bl blablab"
+          value={selectedGame}
+          onChange={(e) => setSelectedGame(e.target.value as number)}
+        >
+          {games.map((game) => (
+            <MenuItem key={game.id} value={game.id}>{`Jogo ${game.id}`}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {error && <FormHelperText error>{error}</FormHelperText>}
+      {success && <FormHelperText>{success}</FormHelperText>}
+      <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+        <Button onClick={handleRegister} variant="contained" color="secondary">Registrar Jogador</Button>
+      </div>
+    </div>
   );
 };
 
